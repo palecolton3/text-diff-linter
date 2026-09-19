@@ -54,6 +54,14 @@ plugs into a CI step or a pre-commit hook without extra glue.
 
 Python 3.9 or newer. No third-party dependencies.
 
+## Development
+
+Tests use the standard library's `unittest` and live under `tests/`:
+
+```
+python -m unittest discover
+```
+
 ## Status
 
 Early. The rule set is intentionally small right now - see the roadmap for

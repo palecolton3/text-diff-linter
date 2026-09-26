@@ -4,6 +4,7 @@ from difflint.parser import AddedLine
 from difflint.rules import (
     DEFAULT_RULES,
     Finding,
+    _has_mixed_indentation,
     _has_trailing_whitespace,
     _is_conflict_marker,
     make_line_length_rule,
@@ -43,6 +44,26 @@ class ConflictMarkerTests(unittest.TestCase):
 
     def test_ignores_marker_that_is_not_at_line_start(self):
         self.assertFalse(_is_conflict_marker("    <<<<<<< HEAD"))
+
+
+class MixedIndentationTests(unittest.TestCase):
+    def test_flags_space_then_tab(self):
+        self.assertTrue(_has_mixed_indentation("  \tfoo = 1"))
+
+    def test_flags_tab_then_space(self):
+        self.assertTrue(_has_mixed_indentation("\t  foo = 1"))
+
+    def test_ignores_tabs_only(self):
+        self.assertFalse(_has_mixed_indentation("\t\tfoo = 1"))
+
+    def test_ignores_spaces_only(self):
+        self.assertFalse(_has_mixed_indentation("    foo = 1"))
+
+    def test_ignores_no_indentation(self):
+        self.assertFalse(_has_mixed_indentation("foo = 1"))
+
+    def test_ignores_mixed_whitespace_outside_indentation(self):
+        self.assertFalse(_has_mixed_indentation("foo = 1\t"))
 
 
 class LineLengthRuleTests(unittest.TestCase):

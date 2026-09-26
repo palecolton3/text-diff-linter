@@ -37,6 +37,13 @@ def _is_conflict_marker(text: str) -> bool:
     )
 
 
+def _has_mixed_indentation(text: str) -> bool:
+    stripped = text.rstrip("\n\r")
+    indent_len = len(stripped) - len(stripped.lstrip(" \t"))
+    indent = stripped[:indent_len]
+    return " " in indent and "\t" in indent
+
+
 def make_line_length_rule(max_length: int) -> Rule:
     def check(text: str) -> bool:
         return len(text.rstrip("\n\r")) > max_length
@@ -51,6 +58,7 @@ def make_line_length_rule(max_length: int) -> Rule:
 DEFAULT_RULES = [
     Rule("trailing-whitespace", "trailing whitespace", _has_trailing_whitespace),
     Rule("conflict-marker", "unresolved merge conflict marker", _is_conflict_marker),
+    Rule("mixed-indentation", "line indented with both tabs and spaces", _has_mixed_indentation),
 ]
 
 

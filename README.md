@@ -48,6 +48,7 @@ plugs into a CI step or a pre-commit hook without extra glue.
 |-----------------------|--------------------------------------------------|
 | `trailing-whitespace` | an added line ending in spaces or tabs           |
 | `conflict-marker`     | a `<<<<<<<`, `=======`, or `>>>>>>>` marker left in an added line |
+| `mixed-indentation`   | an added line whose leading indentation mixes tabs and spaces |
 | `line-too-long`       | an added line longer than the limit (default 100, set with `--max-line-length`) |
 
 ## Requirements
